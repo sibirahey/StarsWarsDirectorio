@@ -7,6 +7,7 @@ target 'FoodTracker' do
 
   # Pods for FoodTracker
   pod 'Alamofire', '~> 4.5'
+  pod 'SwiftyJSON', '~> 3.1'
 
   target 'FoodTrackerTests' do
     inherit! :search_paths

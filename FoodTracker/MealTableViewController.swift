@@ -8,12 +8,15 @@
 
 import UIKit
 import os.log
+import Alamofire
+import SwiftyJSON
 
 class MealTableViewController: UITableViewController {
     
     //MARK: Properties
     
     var meals = [Meal]()
+    var solo: UIImage!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +25,9 @@ class MealTableViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editButtonItem
         
         // Load any saved meals, otherwise load sample data.
-        if let savedMeals = loadMeals() {
-            meals += savedMeals
+        let savedMeals = loadMeals()
+        if savedMeals!.count > 0 {
+            self.meals += savedMeals!
         }
         else {
             // Load the sample data.
@@ -165,24 +169,31 @@ class MealTableViewController: UITableViewController {
     //MARK: Private Methods
     
     private func loadSampleMeals() {
-        
-        let photo1 = UIImage(named: "meal1")
-        let photo2 = UIImage(named: "meal2")
-        let photo3 = UIImage(named: "meal3")
-
-        guard let meal1 = Meal(name: "Caprese Salad", photo: photo1, rating: 4) else {
-            fatalError("Unable to instantiate meal1")
+        Alamofire.request("https://ldscdn.org/mobile/interview/directory").responseJSON { response in
+            let json = JSON(response.result.value!)
+            for (_,subJson):(String, JSON) in json["individuals"] {
+                
+                guard let meal1 = Meal(name: "\(subJson["firstName"]), \(subJson["lastName"])", photo: self.solo, rating: 3) else {
+                    fatalError("Unable to instantiate meal1")
+                }
+                meal1.profilePicture = subJson["profilePicture"].stringValue
+                self.meals += [meal1]
+            }
+            self.tableView.reloadData()
+            self.loadPhotos()
         }
-
-        guard let meal2 = Meal(name: "Chicken and Potatoes", photo: photo2, rating: 5) else {
-            fatalError("Unable to instantiate meal2")
+    }
+    
+    private func loadPhotos(){
+        for meal in self.meals{
+            Alamofire.request(meal.profilePicture!).responseData{ response in
+                if let data = response.result.value {
+                    meal.photo = UIImage(data: data)!
+                }
+                self.tableView.reloadData()
+                self.saveMeals()
+            }
         }
-
-        guard let meal3 = Meal(name: "Pasta with Meatballs", photo: photo3, rating: 3) else {
-            fatalError("Unable to instantiate meal2")
-        }
-
-        meals += [meal1, meal2, meal3]
     }
     
     private func saveMeals() {
