@@ -25,9 +25,9 @@ class MealTableViewController: UITableViewController {
         navigationItem.leftBarButtonItem = editButtonItem
         
         // Load any saved meals, otherwise load sample data.
-        let savedMeals = loadMeals()
-        if savedMeals!.count > 0 {
-            self.meals += savedMeals!
+        
+        if let sMeals = loadMeals(), sMeals.count > 0 {
+            self.meals += sMeals
         }
         else {
             // Load the sample data.
@@ -127,7 +127,7 @@ class MealTableViewController: UITableViewController {
             }
             
             guard let selectedMealCell = sender as? MealTableViewCell else {
-                fatalError("Unexpected sender: \(sender)")
+                fatalError("Unexpected sender: \(sender as Any?)")
             }
             
             guard let indexPath = tableView.indexPath(for: selectedMealCell) else {
@@ -138,7 +138,7 @@ class MealTableViewController: UITableViewController {
             mealDetailViewController.meal = selectedMeal
             
         default:
-            fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+            fatalError("Unexpected Segue Identifier; \(segue.identifier as Any?)")
         }
     }
 
