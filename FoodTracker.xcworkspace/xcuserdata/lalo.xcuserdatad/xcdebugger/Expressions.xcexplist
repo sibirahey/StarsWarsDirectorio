@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "MealTableViewController.viewDidLoad() -&gt; ():MealTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "savedMeals!.count &gt; 0">
+            </PersistentString>
+            <PersistentString
+               value = "savedMeals!.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "MealTableViewController.(loadSampleMeals() -&gt; ()).(closure #1):MealTableViewController.swift">
+         <PersistentStrings>
+            <PersistentString
+               value = "value[&quot;individuals&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
