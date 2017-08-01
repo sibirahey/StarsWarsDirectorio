@@ -118,8 +118,9 @@ class MealTableViewController: UITableViewController {
         
         switch(segue.identifier ?? "") {
             
-        case "AddItem":
-            os_log("Adding a new meal.", log: OSLog.default, type: .debug)
+        case "AddItem": break
+            
+//            os_log("Adding a new meal.", log: OSLog.default, type: .debug)
             
         case "ShowDetail":
             guard let mealDetailViewController = segue.destination as? MealViewController else {
@@ -197,12 +198,13 @@ class MealTableViewController: UITableViewController {
     }
     
     private func saveMeals() {
-        let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(meals, toFile: Meal.ArchiveURL.path)
-        if isSuccessfulSave {
-            os_log("Meals successfully saved.", log: OSLog.default, type: .debug)
-        } else {
-            os_log("Failed to save meals...", log: OSLog.default, type: .error)
-        }
+//        let isSuccessfulSave =
+            NSKeyedArchiver.archiveRootObject(meals, toFile: Meal.ArchiveURL.path)
+//        if isSuccessfulSave {
+//            os_log("Meals successfully saved.", log: OSLog.default, type: .debug)
+//        } else {
+//            os_log("Failed to save meals...", log: OSLog.default, type: .error)
+//        }
     }
     
     private func loadMeals() -> [Meal]?  {
